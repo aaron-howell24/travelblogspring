@@ -56,10 +56,9 @@
 		     <version>1.7.0</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		    <version>3.14.0</version>
-		</dependency>
+		    <groupId>nz.net.ultraq.thymeleaf</groupId>
+		    <artifactId>thymeleaf-layout-dialect</artifactId>
+	    </dependency>
 	</dependencies>
 
 	<build>
