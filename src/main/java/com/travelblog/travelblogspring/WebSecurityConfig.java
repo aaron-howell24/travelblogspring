@@ -1,5 +1,6 @@
 package com.travelblog.travelblogspring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -18,7 +19,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
+	
+	
+	@Bean
+	public PasswordEncoder encoder() {
+	    return new BCryptPasswordEncoder();
+	}
+	
 //	@Bean
 //	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 //	    return httpSecurity
@@ -35,28 +42,29 @@ public class WebSecurityConfig {
 //			.formLogin(Customizer.withDefaults())
 //	    .build();
 //	}
-
-@Bean
-    @Order(1)                                                        
-    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
-        http
-        .cors(AbstractHttpConfigurer::disable)
-        .csrf(AbstractHttpConfigurer::disable)
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(auth -> auth
-            .anyRequest().permitAll()
-            )
-            .httpBasic(Customizer.withDefaults());
-        return http.build();
-    }
+//
+//@Bean
+//    @Order(1)                                                        
+//    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+//        http
+//        .cors(AbstractHttpConfigurer::disable)
+//        .csrf(AbstractHttpConfigurer::disable)
+//        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//        .authorizeHttpRequests(auth -> auth
+//            .anyRequest().permitAll()
+//            )
+//            .httpBasic(Customizer.withDefaults());
+//        return http.build();
+//    }
 //
     @Bean   
-    @Order(2)
+//    @Order(2)
     public SecurityFilterChain formLoginFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
 	            .requestMatchers("/admin/**").hasRole("PROTECTED")
-	            .anyRequest().permitAll()            )
-            .formLogin(Customizer.withDefaults());
+	            .anyRequest().permitAll() )            
+		.httpBasic(Customizer.withDefaults())
+		.formLogin(Customizer.withDefaults());
         return http.build();
     }
 //	
@@ -73,20 +81,14 @@ public class WebSecurityConfig {
 //	
 	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
-		UserDetails user = User.withDefaultPasswordEncoder()
-				.username("user")
-				.password("password")
+		
+		UserDetails user = User
+				.withUsername("user")
+				.password(encoder().encode("user"))
 				.roles("PROTECTED","ADMIN")
 				.build();
 		return new InMemoryUserDetailsManager(user);
 	}
 	
 	
-	
-	@Bean
-	public PasswordEncoder encoder() {
-	    return new BCryptPasswordEncoder();
-	}
-	
-
 }

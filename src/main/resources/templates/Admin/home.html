@@ -1,1 +1,37 @@
-Current time is <span th:text="${serverTime}" />
+
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout}">
+	<head>
+	  <title>Admin Home</title>
+	</head>
+	<body>
+    <!-- /* Content of this page will be decorated by the elements of layout.html (admin/layout) */ -->
+	    <div layout:fragment="content">
+			<div class="d-flex justify-content-around">
+				<a href="#" class="card link-underline link-underline-opacity-0" style="width: 18rem;">
+				  <div class="card-body">
+				    <h5 class="card-title mb-4">Post Categories</h5>
+				    <p class="card-text">Create/Edit Post Categories here</p>
+				  </div>
+				</a>
+				<div class="card" style="width: 18rem;">
+				  <div class="card-body">
+				    <h5 class="card-title">Posts</h5>
+				    <p class="card-text">Create and Manage posts.</p>
+				  </div>
+				</div>
+				<div class="card" style="width: 18rem;">
+				  <div class="card-body">
+				    <h5 class="card-title">Card title</h5>
+				    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				    <a href="#" class="card-link">Card link</a>
+				    <a href="#" class="card-link">Another link</a>
+				  </div>
+				</div>
+
+			</div>
+		
+	    </div>
+	</body>
+</html>
